@@ -12,7 +12,6 @@ export const main = handler(async (event) => {
   if (event.body != null) {
     data = JSON.parse(event.body);
   }
-
   const params = {
     TableName: Table.Notes.tableName,
     Item: {
@@ -25,6 +24,7 @@ export const main = handler(async (event) => {
     },
   };
 
+console.log(params)
   await dynamoDb.put(params);
 
   return JSON.stringify(params.Item);
