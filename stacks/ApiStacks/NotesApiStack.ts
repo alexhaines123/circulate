@@ -1,8 +1,8 @@
 import { Api, Config, StackContext, use } from "sst/constructs";
-import { StorageStack } from "./StorageStack";
+import { NotesStorageStack } from "../StorageStacks/NotesStorageStack";
 
 export function ApiStack({ stack }: StackContext) {
-  const { table } = use(StorageStack);
+  const { table } = use(NotesStorageStack);
 
   const STRIPE_SECRET_KEY = new Config.Secret(stack, "STRIPE_SECRET_KEY");
 

@@ -1,13 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App.tsx';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './index.css';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { Amplify } from 'aws-amplify';
-import config from './config.ts';
+import config from "../config";
 
-Amplify.configure({
+export const amplifyConfig = {
+  ssr: true,
   Auth: {
     mandatorySignIn: true,
     region: config.cognito.REGION,
@@ -23,18 +17,10 @@ Amplify.configure({
   API: {
     endpoints: [
       {
-        name: 'notes',
+        name: "notes",
         endpoint: config.apiGateway.URL,
         region: config.apiGateway.REGION,
       },
     ],
   },
-});
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
-  </React.StrictMode>,
-);
+};

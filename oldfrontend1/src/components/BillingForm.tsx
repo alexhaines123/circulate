@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Stack from "react-bootstrap/Stack";
 import { useFormFields } from "../lib/hooksLib";
 import { Token, StripeError } from "@stripe/stripe-js";
-import LoaderButton from "../components/LoaderButton";
+import LoaderButton from "./LoaderButton";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import "./BillingForm.css";
 

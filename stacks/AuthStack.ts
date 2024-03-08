@@ -1,11 +1,11 @@
-import { ApiStack } from "./ApiStack";
+import { ApiStack } from "./ApiStacks/NotesApiStack";
 import * as iam from "aws-cdk-lib/aws-iam";
-import { StorageStack } from "./StorageStack";
 import { Cognito, StackContext, use } from "sst/constructs";
+import { BucketStack } from "./StorageStacks/BucketStack";
 
 export function AuthStack({ stack, app }: StackContext) {
   const { api } = use(ApiStack);
-  const { bucket } = use(StorageStack);
+  const { bucket } = use(BucketStack);
 
   // Create a Cognito User Pool and Identity Pool
   const auth = new Cognito(stack, "Auth", {
