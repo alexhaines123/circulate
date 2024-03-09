@@ -1,3 +1,4 @@
+import NavBar from "@/components/navbar";
 import { amplifyConfig } from "@/lib/amplifyLib";
 import "@/styles/globals.css";
 import { Amplify, Auth } from "aws-amplify";
@@ -21,10 +22,11 @@ export default function App({
   }, []);
 
   return (
-    <main
-      className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}
-    >
-      <Component {...pageProps} />
+    <main className={`${inter.className}`}>
+      <div className="mx-auto max-w-screen-lg">
+        <NavBar />
+        <Component {...pageProps} />
+      </div>
     </main>
   );
 }

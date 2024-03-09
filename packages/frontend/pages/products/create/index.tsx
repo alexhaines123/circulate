@@ -21,7 +21,7 @@ function CreateProductPage() {
     const price = priceInput.current.value;
 
     console.log(title, description, price);
-    fetch("/api/product", {
+    fetch("/api/products", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

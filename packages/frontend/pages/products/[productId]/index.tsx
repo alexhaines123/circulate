@@ -1,4 +1,4 @@
-import { getProducts } from "@/api/products";
+import { getProduct, getProducts } from "@/api/products";
 
 function ProductPage({ products }: { products: any }) {
   return (
@@ -18,10 +18,10 @@ function ProductPage({ products }: { products: any }) {
 export default ProductPage;
 
 export async function getServerSideProps() {
-  const products = await getProducts();
+  const product = await getProduct();
   return {
     props: {
-      products,
+      product,
     },
   };
 }
