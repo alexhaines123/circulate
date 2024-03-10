@@ -1,3 +1,4 @@
+import { CreateProductForm } from "@/components/forms/products/create";
 import { useRef } from "react";
 
 function CreateProductPage() {
@@ -31,28 +32,9 @@ function CreateProductPage() {
   }
 
   return (
-    <div>
+    <div className="prose">
       <h1>Create Product</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Name</label>
-          <input ref={titleInput} type="text" id="name" name="name" />
-        </div>
-        <div>
-          <label htmlFor="description">Description</label>
-          <input
-            ref={descriptionInput}
-            type="text"
-            id="description"
-            name="description"
-          />
-        </div>
-        <div>
-          <label htmlFor="price">Price</label>
-          <input ref={priceInput} type="number" id="price" name="price" />
-        </div>
-        <button type="submit">Create Product</button>
-      </form>
+      <CreateProductForm />
     </div>
   );
 }

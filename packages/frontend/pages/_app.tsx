@@ -23,7 +23,7 @@ export default function App({
 
   return (
     <main className={`${inter.className}`}>
-      <div className="mx-auto max-w-screen-lg">
+      <div className="mx-auto max-w-screen-lg prose">
         <NavBar />
         <Component {...pageProps} />
       </div>
