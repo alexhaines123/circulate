@@ -24,7 +24,6 @@ export const main = handler(async (event) => {
     },
   };
 
-console.log(params)
   await dynamoDb.put(params);
 
   return JSON.stringify(params.Item);

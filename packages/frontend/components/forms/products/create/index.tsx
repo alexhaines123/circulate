@@ -2,6 +2,8 @@ import { POST, State } from "@/pages/api/products";
 import { FormEvent, useEffect, useState } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import {
+  Control,
+  Controller,
   FieldErrors,
   FieldPath,
   UseFormRegister,
@@ -13,17 +15,20 @@ import { ErrorMessage } from "@hookform/error-message";
 import Input from "@/components/input";
 import Button from "@/components/button";
 import TextArea from "@/components/textarea";
+import ImagePicker from "@/components/image-picker";
 
 export interface FormValues {
   title: string;
   description: string;
   price: number;
+  images: FileList;
 }
 
 export function CreateProductForm() {
   const {
-    register,
     formState: { isValid, errors },
+    register,
+    control,
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
@@ -34,16 +39,17 @@ export function CreateProductForm() {
       event.preventDefault();
 
       const formData = new FormData(event.currentTarget);
-
+      console.log(formData.get("images"));
       const body = {
         title: formData.get("title"),
         description: formData.get("description"),
         price: formData.get("price"),
+        images: formData.getAll("images"),
       };
 
       await fetch("/api/products", {
         method: "POST",
-        body: JSON.stringify(body),
+        body: formData,
       });
     } catch (error: any) {
       alert("Error: " + error.message);
@@ -52,29 +58,52 @@ export function CreateProductForm() {
 
   return (
     <form onSubmit={onSubmit}>
-      <FormContent register={register} isValid={isValid} errors={errors} />
+      <FormContent
+        register={register}
+        control={control}
+        isValid={isValid}
+        errors={errors}
+      />
     </form>
   );
 }
 
 export function FormContent({
-  register,
   isValid,
   errors,
+  control,
+  register,
 }: {
-  register: UseFormRegister<FormValues>;
   isValid: boolean;
   errors: FieldErrors<FormValues>;
+  control: Control<FormValues, any>;
+  register: UseFormRegister<FormValues>;
 }) {
-  console.log(errors, isValid);
   return (
     <div className="flex flex-col gap-4">
+      <Controller
+        name="images"
+        control={control}
+        render={({ field: { onChange } }) => (
+          <ImagePicker
+            label="Image"
+            name="image"
+            errors={errors}
+            register={register}
+            onChange={(files) => {
+              console.log("hih", files);
+              if (!files) return;
+              onChange(files);
+            }}
+          />
+        )}
+      />
       <Input
         label="Title"
-        placeholder="My awesome item!"
         name="title"
         errors={errors}
         register={register}
+        placeholder="My awesome item!"
       />
       <TextArea
         label="Description"

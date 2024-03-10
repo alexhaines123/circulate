@@ -30,6 +30,14 @@ export async function GET(_: NextApiRequest, res: NextApiResponse) {
   res.status(200).json(products);
 }
 
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+  // Specifies the maximum allowed duration for this function to execute (in seconds)
+  maxDuration: 5,
+};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse

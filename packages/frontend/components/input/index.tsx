@@ -11,10 +11,11 @@ type Props = ComponentProps<"input"> & {
 function Input({ label, errors, register, ...props }: Props) {
   return (
     <div>
-      <label className="input input-bordered flex items-center max-w-md gap-2">
+      <label className="input input-bordered flex items-center max-w-2xl gap-2">
         {label}
         <input
           {...(props.name && register && register(props.name))}
+          {...props}
           className="grow"
         />
       </label>

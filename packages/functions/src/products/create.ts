@@ -13,7 +13,7 @@ export const main = handler(async (event) => {
   if (event.body != null) {
     data = JSON.parse(JSON.parse(event.body)); // TODO: Why is this double-parsed?
   }
-  console.log("data", typeof data, data.title);
+
   const params = {
     TableName: Table.Products.tableName,
     Item: {
@@ -24,9 +24,7 @@ export const main = handler(async (event) => {
     },
   };
 
-  console.log(params);
   await dynamoDb.put(params);
 
-  console.log(params.Item, data);
   return JSON.stringify(params.Item);
 });

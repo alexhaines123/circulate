@@ -1,3 +1,4 @@
+import HeadComponent from "@/components/head";
 import NavBar from "@/components/navbar";
 import { amplifyConfig } from "@/lib/amplifyLib";
 import "@/styles/globals.css";
@@ -17,17 +18,19 @@ export default function App({
   amplifyConfig,
 }: AppProps & Props) {
   useEffect(() => {
-    console.log("amplifyConfig", amplifyConfig);
     Amplify.configure(amplifyConfig);
   }, []);
 
   return (
-    <main className={`${inter.className}`}>
-      <div className="mx-auto max-w-screen-lg prose">
-        <NavBar />
-        <Component {...pageProps} />
-      </div>
-    </main>
+    <>
+      <HeadComponent title="Circulate" />
+      <main className={`${inter.className}`}>
+        <div className="mx-auto max-w-screen-lg px-1 prose">
+          <NavBar />
+          <Component {...pageProps} />
+        </div>
+      </main>
+    </>
   );
 }
 

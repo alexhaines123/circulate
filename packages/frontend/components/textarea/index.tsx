@@ -16,8 +16,9 @@ function TextArea({ label, errors, register, ...props }: Props) {
         <span className="label-text">{label}</span>
       </div>
       <textarea
-        className="textarea textarea-bordered h-24 max-w-md"
+        className="textarea textarea-bordered h-24 max-w-2xl"
         {...(props.name && register && register(props.name))}
+        {...props}
       ></textarea>
       {errors && props.name && (
         <ErrorMessage name={props.name} errors={errors} />
