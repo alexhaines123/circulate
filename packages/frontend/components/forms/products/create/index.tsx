@@ -39,17 +39,15 @@ export function CreateProductForm() {
       event.preventDefault();
 
       const formData = new FormData(event.currentTarget);
-      console.log(formData.get("images"));
       const body = {
         title: formData.get("title"),
         description: formData.get("description"),
         price: formData.get("price"),
-        images: formData.getAll("images"),
       };
 
       await fetch("/api/products", {
         method: "POST",
-        body: formData,
+        body: JSON.stringify(body),
       });
     } catch (error: any) {
       alert("Error: " + error.message);

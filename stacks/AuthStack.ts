@@ -1,7 +1,7 @@
 import { ApiStack } from "./ApiStacks/NotesApiStack";
 import * as iam from "aws-cdk-lib/aws-iam";
 import { Cognito, StackContext, use } from "sst/constructs";
-import { BucketStack } from "./StorageStacks/BucketStack";
+import { BucketStack } from "./FileStorageStacks/BucketStack";
 
 export function AuthStack({ stack, app }: StackContext) {
   const { api } = use(ApiStack);

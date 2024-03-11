@@ -17,11 +17,11 @@ function ProductPage({ products }: { products: any }) {
 
 export default ProductPage;
 
-export async function getServerSideProps() {
-  const product = await getProduct();
-  return {
-    props: {
-      product,
-    },
-  };
-}
+// export async function getServerSideProps() {
+//   const product = await getProduct();
+//   return {
+//     props: {
+//       product,
+//     },
+//   };
+// }

@@ -10,7 +10,8 @@
     "remove": "sst remove",
     "console": "sst console",
     "typecheck": "tsc --noEmit",
-    "test": "sst bind vitest run"
+    "test": "sst bind vitest run",
+    "gen": "hygen"
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.2",
@@ -22,5 +23,10 @@
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "@aws-sdk/client-rds-data": "^3.529.1",
+    "kysely": "^0.27.3",
+    "kysely-data-api": "^0.2.1"
+  }
 }

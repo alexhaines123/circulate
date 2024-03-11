@@ -20,6 +20,7 @@ export type State =
   | null;
 
 export async function POST(req: NextApiRequest, res: NextApiResponse) {
+  console.log(req.body, "hiho");
   const product = await createProduct(req.body);
 
   res.status(200).json(product);
@@ -29,14 +30,6 @@ export async function GET(_: NextApiRequest, res: NextApiResponse) {
   const products = await getProducts();
   res.status(200).json(products);
 }
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-  // Specifies the maximum allowed duration for this function to execute (in seconds)
-  maxDuration: 5,
-};
 
 export default async function handler(
   req: NextApiRequest,

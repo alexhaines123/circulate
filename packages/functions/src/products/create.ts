@@ -1,7 +1,6 @@
 import * as uuid from "uuid";
-import { Table } from "sst/node/table";
 import handler from "@notes/core/handler";
-import dynamoDb from "@notes/core/dynamodb";
+import { createProduct } from "@notes/core/rds/repository/product";
 
 export const main = handler(async (event) => {
   let data = {
@@ -15,16 +14,14 @@ export const main = handler(async (event) => {
   }
 
   const params = {
-    TableName: Table.Products.tableName,
-    Item: {
-      productId: uuid.v1(), // A unique uuid
-      title: data.title, // Parsed from request body
-      description: data.description, // Parsed from request body
-      price: data.price, // Parsed from request body
-    },
+    product_id: uuid.v1(), // A unique uuid
+    title: data.title, // Parsed from request body
+    description: data.description, // Parsed from request body
+    price: parseFloat(data.price), // Parsed from request body
   };
+  console.log(params, event.body)
 
-  await dynamoDb.put(params);
+  const product = await createProduct(params);
 
-  return JSON.stringify(params.Item);
+  return JSON.stringify(product);
 });

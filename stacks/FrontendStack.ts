@@ -1,7 +1,7 @@
 import { StackContext, NextjsSite, use } from "sst/constructs";
 import { ApiStack } from "./ApiStacks/NotesApiStack";
 import { AuthStack } from "./AuthStack";
-import { BucketStack } from "./StorageStacks/BucketStack";
+import { BucketStack } from "./FileStorageStacks/BucketStack";
 import { ProductsApiStack } from "./ApiStacks/ProductsApiStack";
 
 export function FrontendStack({ stack, app }: StackContext) {

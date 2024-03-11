@@ -1,14 +1,16 @@
-import { Api, Config, StackContext, use } from "sst/constructs";
+import { Api, StackContext, use } from "sst/constructs";
+import { MarketplaceDatabaseStack } from "../DatabaseStacks/MarketplaceDatabaseStack";
 import { ProductStorageStack } from "../StorageStacks/ProductStorageStack";
 
 export function ProductsApiStack({ stack }: StackContext) {
+  const { cluster } = use(MarketplaceDatabaseStack);
   const { table } = use(ProductStorageStack);
 
   // Create the API
   const api = new Api(stack, "ProductsApi", {
     defaults: {
       function: {
-        bind: [table],
+        bind: [cluster, table],
       },
     },
     routes: {
