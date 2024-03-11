@@ -1,4 +1,4 @@
-import { Kysely } from "kysely";
+import { Kysely, ParseJSONResultsPlugin } from "kysely";
 import { DataApiDialect } from "kysely-data-api";
 import { RDSData } from "@aws-sdk/client-rds-data";
 import { RDS } from "sst/node/rds";
@@ -14,6 +14,7 @@ const rds = new Kysely<Database>({
       client: new RDSData({}),
     },
   }),
+  plugins: [new ParseJSONResultsPlugin()],
 });
 
 export default rds;

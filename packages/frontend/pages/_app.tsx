@@ -2,10 +2,12 @@ import HeadComponent from "@/components/head";
 import NavBar from "@/components/navbar";
 import { amplifyConfig } from "@/lib/amplifyLib";
 import "@/styles/globals.css";
-import { Amplify, Auth } from "aws-amplify";
+import { Amplify } from "aws-amplify";
 import type { AppProps } from "next/app";
 import { Inter } from "next/font/google";
 import { useEffect } from "react";
+import "@aws-amplify/ui-react/styles.css";
+
 const inter = Inter({ subsets: ["latin"] });
 
 Amplify.configure(amplifyConfig);
@@ -17,9 +19,9 @@ export default function App({
   pageProps,
   amplifyConfig,
 }: AppProps & Props) {
-  useEffect(() => {
-    Amplify.configure(amplifyConfig);
-  }, []);
+  // useEffect(() => {
+  //   Amplify.configure(amplifyConfig);
+  // }, []);
 
   return (
     <>

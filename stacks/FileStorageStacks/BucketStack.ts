@@ -5,7 +5,7 @@ export function BucketStack({ stack }: StackContext) {
   const bucket = new Bucket(stack, "Uploads", {
     cors: [
       {
-        maxAge: "1 day",
+        maxAge: "100 day",
         allowedOrigins: ["*"],
         allowedHeaders: ["*"],
         allowedMethods: ["GET", "PUT", "POST", "DELETE", "HEAD"],

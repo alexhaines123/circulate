@@ -1,34 +1,34 @@
-import { POST, State } from "@/pages/api/products";
-import { FormEvent, useEffect, useState } from "react";
-import { useFormState, useFormStatus } from "react-dom";
+import { FormEvent, useEffect } from "react";
 import {
   Control,
   Controller,
   FieldErrors,
-  FieldPath,
   UseFormRegister,
   useForm,
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema } from "./validation";
-import { ErrorMessage } from "@hookform/error-message";
 import Input from "@/components/input";
 import Button from "@/components/button";
 import TextArea from "@/components/textarea";
 import ImagePicker from "@/components/image-picker";
+import { s3Upload } from "@/lib/awsLib";
+
+type Props = { signedFileUploadUrl: string };
 
 export interface FormValues {
   title: string;
   description: string;
   price: number;
-  images: FileList;
+  images: File[];
 }
 
-export function CreateProductForm() {
+export function CreateProductForm({ signedFileUploadUrl }: Props) {
   const {
     formState: { isValid, errors },
-    register,
     control,
+    register,
+    getValues,
   } = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
@@ -38,11 +38,26 @@ export function CreateProductForm() {
     try {
       event.preventDefault();
 
-      const formData = new FormData(event.currentTarget);
+      const values = getValues();
+
+      const images = await Promise.all(
+        values.images.map((file) =>
+          fetch(signedFileUploadUrl, {
+            body: file,
+            method: "PUT",
+            headers: {
+              "Content-Type": file.type,
+              "Content-Disposition": `attachment; filename="${file.name}"`,
+            },
+          })
+        )
+      );
+
       const body = {
-        title: formData.get("title"),
-        description: formData.get("description"),
-        price: formData.get("price"),
+        title: values.title,
+        description: values.description,
+        price: values.price,
+        images: images.map((response) => ({ key: response.url.split("?")[0] })),
       };
 
       await fetch("/api/products", {
@@ -57,10 +72,10 @@ export function CreateProductForm() {
   return (
     <form onSubmit={onSubmit}>
       <FormContent
-        register={register}
         control={control}
         isValid={isValid}
         errors={errors}
+        register={register}
       />
     </form>
   );
@@ -84,12 +99,11 @@ export function FormContent({
         control={control}
         render={({ field: { onChange } }) => (
           <ImagePicker
-            label="Image"
-            name="image"
+            label="Images"
+            name="images"
             errors={errors}
             register={register}
             onChange={(files) => {
-              console.log("hih", files);
               if (!files) return;
               onChange(files);
             }}

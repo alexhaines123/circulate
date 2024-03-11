@@ -11,11 +11,13 @@ import { MarketplaceDatabaseStack } from "./stacks/DatabaseStacks/MarketplaceDat
 export default {
   config(_input) {
     return {
-      name: "circulate-test",
+      name: "circulate",
       region: "eu-west-2",
     };
   },
   stacks(app) {
+    app.setDefaultRemovalPolicy("destroy");
+
     app
       .stack(BucketStack)
       .stack(MarketplaceDatabaseStack)

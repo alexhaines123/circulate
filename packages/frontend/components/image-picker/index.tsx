@@ -1,4 +1,4 @@
-import { ComponentProps, useRef, useState } from "react";
+import { ComponentProps, useEffect, useRef, useState } from "react";
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
 import { TiDeleteOutline } from "react-icons/ti";
@@ -9,11 +9,12 @@ type Props = ComponentProps<"input"> & {
   label: string;
   errors?: FieldErrors;
   register?: UseFormRegister<any>;
-  onChange?: (files: FileList) => void;
+  onChange: (files: File[]) => void;
 };
 
 function ImagePicker({ label, errors, register, onChange, ...props }: Props) {
-  const [images, setImages] = useState<string[]>([]);
+  const [imagePreviewUrls, setImagePreviewUrls] = useState<string[]>([]);
+  const [files, setFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   function triggerFilePicker() {
@@ -23,23 +24,31 @@ function ImagePicker({ label, errors, register, onChange, ...props }: Props) {
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     if (!event.target.files) return;
     if (event.target.files?.length === 0) return;
+
     for (const file of Array.from(event.target.files)) {
+      setFiles((files) => [...files, file]);
+
       const reader = new FileReader();
       reader.onload = (event) => {
         if (!event.target || !event.target.result) return;
 
-        setImages((images) => [...images, event.target!.result as string]);
+        setImagePreviewUrls((images) => [
+          ...images,
+          event.target!.result as string,
+        ]);
       };
       reader.readAsDataURL(file);
-    }
-    if (onChange) {
-      onChange(event.target.files);
     }
   }
 
   function removeImage(index: number) {
-    setImages((images) => images.filter((_, i) => i !== index));
+    setImagePreviewUrls((images) => images.filter((_, i) => i !== index));
+    setFiles((files) => files.filter((_, i) => i !== index));
   }
+
+  useEffect(() => {
+    onChange(files);
+  }, [files]);
 
   return (
     <div className="flex flex-col gap-2">
@@ -54,10 +63,11 @@ function ImagePicker({ label, errors, register, onChange, ...props }: Props) {
           ref={fileInputRef}
           multiple
           onChange={handleFileChange}
+          value=""
         />
       </label>
       <div className="grid grid-cols-2 border-dashed border-2 items-center">
-        {images.map((image, index) => (
+        {imagePreviewUrls.map((image, index) => (
           <div
             key={index}
             className="relative h-60 w-full flex flex-col items-end"

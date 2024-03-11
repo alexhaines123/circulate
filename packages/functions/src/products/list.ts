@@ -1,15 +1,8 @@
-import { Table } from "sst/node/table";
 import handler from "@notes/core/handler";
-import dynamoDb from "@notes/core/dynamodb";
-import { DocumentClient } from "aws-sdk/clients/dynamodb";
+import { findProducts } from "@notes/core/rds/repository/product";
 
-export const main = handler(async (event) => {
-  const params = {
-    TableName: Table.Products.tableName,
-  } satisfies DocumentClient.ScanInput;
+export const main = handler(async () => {
+  const products = await findProducts({});
 
-  const result = await dynamoDb.scan(params);
-
-  // Return the matching list of items in response body
-  return JSON.stringify(result.Items);
+  return JSON.stringify(products);
 });

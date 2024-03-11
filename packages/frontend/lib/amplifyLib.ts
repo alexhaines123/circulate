@@ -3,7 +3,7 @@ import config from "@/config";
 export const amplifyConfig = {
   ssr: true,
   Auth: {
-    mandatorySignIn: true,
+    mandatorySignIn: false,
     region: config.cognito.REGION,
     userPoolId: config.cognito.USER_POOL_ID,
     identityPoolId: config.cognito.IDENTITY_POOL_ID,

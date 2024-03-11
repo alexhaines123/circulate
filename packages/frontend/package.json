@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-amplify/ui-react": "^6.1.5",
+    "@aws-sdk/client-s3": "^3.529.1",
+    "@aws-sdk/s3-request-presigner": "^3.529.1",
     "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^3.3.4",
     "@stripe/react-stripe-js": "^2.5.1",
@@ -19,8 +22,9 @@
     "@trpc/react-query": "^11.0.0-next-beta.316",
     "@trpc/server": "^11.0.0-next-beta.316",
     "amazon-cognito-identity-js": "^6.3.12",
-    "aws-amplify": "^5",
+    "aws-amplify": "^5.3.17",
     "classnames": "^2.5.1",
+    "formidable": "^3.5.1",
     "next": "14.1.3",
     "react": "^18",
     "react-dom": "^18",
@@ -31,6 +35,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.10",
+    "@types/formidable": "^3.4.5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
