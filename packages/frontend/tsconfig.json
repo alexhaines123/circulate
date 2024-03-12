@@ -14,8 +14,9 @@
     "incremental": true,
     "paths": {
       "@/*": ["./*"]
-    }
+    },
   },
+  "references": [{ "path": "../functions" }],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }

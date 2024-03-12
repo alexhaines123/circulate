@@ -14,10 +14,15 @@
     "vitest": "^1.2.2"
   },
   "dependencies": {
-    "@trpc/server": "^9.27.0",
+    "@tanstack/react-query": "^4.36.1",
+    "@trpc/client": "^10.45.2",
+    "@trpc/next": "^10.45.2",
+    "@trpc/react-query": "^10.45.2",
+    "@trpc/server": "^10.45.2",
     "aws-lambda": "^1.0.7",
     "aws-sdk": "^2.1551.0",
     "stripe": "^14.15.0",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.1",
+    "zod": "^3.22.4"
   }
 }

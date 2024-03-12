@@ -26,7 +26,13 @@
   ],
   "dependencies": {
     "@aws-sdk/client-rds-data": "^3.529.1",
+    "@tanstack/react-query": "^5.27.5",
+    "@trpc/client": "^11.0.0-next-beta.318",
+    "@trpc/next": "^11.0.0-next-beta.318",
+    "@trpc/react-query": "^11.0.0-next-beta.318",
+    "@trpc/server": "^11.0.0-next-beta.318",
     "kysely": "^0.27.3",
-    "kysely-data-api": "^0.2.1"
+    "kysely-data-api": "^0.2.1",
+    "zod": "^3.22.4"
   }
 }

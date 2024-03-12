@@ -1,15 +1,15 @@
 import { trpc } from "@/lib/trpc";
 import Image from "next/image";
 
-function ProductPage({ products }: { products: any }) {
-  const productList = trpc.useQuery(["productList"]);
+function ProductPage() {
+  const productList = trpc.productList.useQuery();
 
   return (
     <div>
       <h1>Products</h1>
 
-      {productList.data?.map((product: any) => (
-        <div key={product.id}>
+      {productList.data?.map((product) => (
+        <div key={product.product_id}>
           <h2>{product.title}</h2>
           <p>{product.description}</p>
           <p>{product.price}</p>
