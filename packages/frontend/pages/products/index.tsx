@@ -1,11 +1,17 @@
-import { getProducts } from "@/api/products";
+import { trpc } from "@/lib/trpc";
 import Image from "next/image";
 
 function ProductPage({ products }: { products: any }) {
+  const productList = trpc.useQuery(["productList"]);
+
+  if (!productList.data) {
+    return <div>Error: Loading</div>;
+  }
   return (
     <div>
       <h1>Products</h1>
-      {products.map((product: any) => (
+
+      {productList.data.map((product: any) => (
         <div key={product.id}>
           <h2>{product.title}</h2>
           <p>{product.description}</p>
@@ -29,13 +35,3 @@ function ProductPage({ products }: { products: any }) {
 }
 
 export default ProductPage;
-
-export async function getServerSideProps() {
-  const products = await getProducts();
-  console.log(products);
-  return {
-    props: {
-      products,
-    },
-  };
-}

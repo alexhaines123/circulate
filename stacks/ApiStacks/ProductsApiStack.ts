@@ -16,6 +16,8 @@ export function ProductsApiStack({ stack }: StackContext) {
     routes: {
       "POST /products": "packages/functions/src/products/create.main",
       "GET /products": "packages/functions/src/products/list.main",
+      "ANY /trpc/{proxy+}":
+        "packages/functions/src/products/trpc/index.main",
     },
   });
 
