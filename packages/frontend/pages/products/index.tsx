@@ -13,7 +13,7 @@ function ProductPage() {
           <h2>{product.title}</h2>
           <p>{product.description}</p>
           <p>{product.price}</p>
-          {product.product_images.map((image: any) => (
+          {product.product_images.map((image) => (
             <div className="relative w-20 h-20">
               <Image
                 key={image.product_image_id}
