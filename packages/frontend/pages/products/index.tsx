@@ -4,30 +4,25 @@ import Image from "next/image";
 function ProductPage({ products }: { products: any }) {
   const productList = trpc.useQuery(["productList"]);
 
-  if (!productList.data) {
-    return <div>Error: Loading</div>;
-  }
   return (
     <div>
       <h1>Products</h1>
 
-      {productList.data.map((product: any) => (
+      {productList.data?.map((product: any) => (
         <div key={product.id}>
           <h2>{product.title}</h2>
           <p>{product.description}</p>
           <p>{product.price}</p>
-          <p>
-            {product.product_images.map((image: any) => (
-              <div className="relative w-20 h-20">
-                <Image
-                  key={image.product_image_id}
-                  src={image.key}
-                  alt={product.title}
-                  fill
-                />
-              </div>
-            ))}
-          </p>
+          {product.product_images.map((image: any) => (
+            <div className="relative w-20 h-20">
+              <Image
+                key={image.product_image_id}
+                src={image.key}
+                alt={product.title}
+                fill
+              />
+            </div>
+          ))}
         </div>
       ))}
     </div>

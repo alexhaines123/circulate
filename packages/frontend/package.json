@@ -17,7 +17,7 @@
     "@stripe/react-stripe-js": "^2.5.1",
     "@stripe/stripe-js": "^3.0.7",
     "@trpc/client": "^9.27.4",
-    "@trpc/next": "9.27",
+    "@trpc/next": "^9.27.4",
     "@trpc/react": "^9.27.4",
     "@trpc/server": "^9.27.4",
     "amazon-cognito-identity-js": "^6.3.12",
