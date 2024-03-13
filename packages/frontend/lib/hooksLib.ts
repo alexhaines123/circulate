@@ -1,4 +1,6 @@
 import { useState, ChangeEvent, ChangeEventHandler } from "react";
+import { useRouter } from "next/router";
+import { z } from "zod";
 
 interface FieldsType {
   [key: string | symbol]: string;
@@ -20,3 +22,12 @@ export function useFormFields(
     },
   ];
 }
+
+export const useTypedRouter = <T extends z.Schema>(schema: T) => {
+  const { query, ...router } = useRouter();
+
+  return {
+    query: schema.parse(query) as z.infer<typeof schema>,
+    ...router,
+  };
+};

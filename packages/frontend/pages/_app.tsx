@@ -16,9 +16,13 @@ function App({ Component, pageProps }: AppProps) {
     <>
       <HeadComponent title="Circulate" />
       <main className={`${inter.className}`}>
-        <div className="mx-auto max-w-screen-lg px-1 prose">
-          <NavBar />
-          <Component {...pageProps} />
+        <div className="mx-auto max-w-screen-2xl px-1 prose">
+          <div className="lg:mx-8 mx-2">
+            <NavBar />
+            <div className="my-4">
+              <Component {...pageProps} />
+            </div>
+          </div>
         </div>
       </main>
     </>

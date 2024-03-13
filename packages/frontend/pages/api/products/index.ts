@@ -1,9 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
 import { createProduct, getProducts } from "@/api/products";
-import { formSchema } from "@/components/forms/products/create/validation";
-import { ZodError } from "zod";
-import { s3Upload } from "@/lib/awsLib";
+
 
 export type State =
   | {

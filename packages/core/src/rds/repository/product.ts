@@ -15,9 +15,18 @@ export async function findProducts(criteria: Partial<Product>) {
     query = query.where("title", "=", criteria.title);
   }
 
-  // query = query.select((eb) => withProductImages(eb));
-
   return await query.selectAll().execute();
+}
+
+export async function getProduct(criteria: Pick<Product, "product_id">) {
+  let query = db
+    .selectFrom("product")
+    .select(["product_id", "title", "description", "price"])
+    .select((eb) => withProductImages(eb));
+
+  query = query.where("product_id", "=", criteria.product_id); // Kysely is immutable, you must re-assign!
+
+  return await query.execute();
 }
 
 export async function createProduct(product: NewProduct) {

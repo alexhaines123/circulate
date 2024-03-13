@@ -4,9 +4,16 @@ import { ComponentProps } from "react";
 type Props = ComponentProps<"button"> & {
   importance?: "primary" | "secondary";
   extraClassName?: string;
+  isLoading?: boolean;
 };
 
-function Button({ importance, extraClassName, ...props }: Props) {
+function Button({
+  importance,
+  extraClassName,
+  isLoading,
+  children,
+  ...props
+}: Props) {
   const importanceClass =
     importance === "secondary" ? "btn-secondary" : "btn-primary";
 
@@ -14,7 +21,10 @@ function Button({ importance, extraClassName, ...props }: Props) {
     <button
       {...props}
       className={`${classNames("btn ", importanceClass, extraClassName)}`}
-    />
+    >
+      {isLoading && <span className="loading loading-spinner"></span>}
+      {children}
+    </button>
   );
 }
 

@@ -1,4 +1,4 @@
-import { FormEvent, useEffect } from "react";
+import { FormEvent } from "react";
 import {
   Control,
   Controller,
@@ -7,23 +7,23 @@ import {
   useForm,
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { trpc } from "@/lib/trpc";
 import { formSchema } from "./validation";
 import Input from "@/components/input";
 import Button from "@/components/button";
 import TextArea from "@/components/textarea";
 import ImagePicker from "@/components/image-picker";
-import { s3Upload } from "@/lib/awsLib";
-
-type Props = { signedFileUploadUrl: string };
+import { useFetchQuery } from "@/lib/queries";
+import { useRouter } from "next/router";
 
 export interface FormValues {
   title: string;
   description: string;
-  price: number;
+  price: string;
   images: File[];
 }
 
-export function CreateProductForm({ signedFileUploadUrl }: Props) {
+export function CreateProductForm() {
   const {
     formState: { isValid, errors },
     control,
@@ -33,6 +33,15 @@ export function CreateProductForm({ signedFileUploadUrl }: Props) {
     resolver: zodResolver(formSchema),
     mode: "onBlur",
   });
+  const productCreateMutation = trpc.products.productCreate.useMutation();
+  const s3BatchGetS3SignedUrlsMutation =
+    trpc.file.batchGetSignedUploadUrls.useMutation();
+  const fileUploadMutation = useFetchQuery();
+
+  const router = useRouter();
+
+  const isLoading =
+    productCreateMutation.isLoading || s3BatchGetS3SignedUrlsMutation.isLoading;
 
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     try {
@@ -40,30 +49,40 @@ export function CreateProductForm({ signedFileUploadUrl }: Props) {
 
       const values = getValues();
 
+      const signedUploadUrls = await s3BatchGetS3SignedUrlsMutation.mutateAsync(
+        {
+          amount: values.images.length,
+        }
+      );
+
       const images = await Promise.all(
-        values.images.map((file) =>
-          fetch(signedFileUploadUrl, {
-            body: file,
-            method: "PUT",
-            headers: {
-              "Content-Type": file.type,
-              "Content-Disposition": `attachment; filename="${file.name}"`,
+        values.images.map((file, indx) => {
+          return fileUploadMutation.mutateAsync({
+            input: signedUploadUrls[indx],
+            init: {
+              body: file,
+              method: "PUT",
+              headers: {
+                "Content-Type": file.type,
+                "Content-Disposition": `attachment; filename="${file.name}"`,
+              },
             },
-          })
-        )
+          });
+        })
       );
 
       const body = {
         title: values.title,
         description: values.description,
-        price: values.price,
-        images: images.map((response) => ({ key: response.url.split("?")[0] })),
+        price: parseFloat(values.price),
+        product_images: images.map((response) => ({
+          key: response.url.split("?")[0],
+        })),
       };
 
-      await fetch("/api/products", {
-        method: "POST",
-        body: JSON.stringify(body),
-      });
+      const newProduct = await productCreateMutation.mutateAsync(body);
+
+      router.push(`/products/${newProduct.product_id}`);
     } catch (error: any) {
       alert("Error: " + error.message);
     }
@@ -75,6 +94,7 @@ export function CreateProductForm({ signedFileUploadUrl }: Props) {
         control={control}
         isValid={isValid}
         errors={errors}
+        isLoading={isLoading}
         register={register}
       />
     </form>
@@ -85,11 +105,13 @@ export function FormContent({
   isValid,
   errors,
   control,
+  isLoading,
   register,
 }: {
   isValid: boolean;
   errors: FieldErrors<FormValues>;
   control: Control<FormValues, any>;
+  isLoading: boolean;
   register: UseFormRegister<FormValues>;
 }) {
   return (
@@ -124,9 +146,20 @@ export function FormContent({
         register={register}
         errors={errors}
       />
-      <Input label="Price" name="price" errors={errors} register={register} />
+      <Input
+        label="Price"
+        name="price"
+        type="number"
+        step={0.01}
+        errors={errors}
+        register={register}
+      />
       <div className="flex justify-end">
-        <Button type="submit" disabled={!isValid}>
+        <Button
+          type="submit"
+          isLoading={isLoading}
+          disabled={!isValid || isLoading}
+        >
           Create
         </Button>
       </div>
