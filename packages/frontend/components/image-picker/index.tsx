@@ -8,14 +8,24 @@ import Image from "next/image";
 type Props = ComponentProps<"input"> & {
   label: string;
   errors?: FieldErrors;
+  maxFiles?: number;
   register?: UseFormRegister<any>;
   onChange: (files: File[]) => void;
 };
 
-function ImagePicker({ label, errors, register, onChange, ...props }: Props) {
+function ImagePicker({
+  label,
+  errors,
+  maxFiles = Infinity,
+  register,
+  onChange,
+  ...props
+}: Props) {
   const [imagePreviewUrls, setImagePreviewUrls] = useState<string[]>([]);
   const [files, setFiles] = useState<File[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const disableAddPhotoButton = files.length >= maxFiles;
 
   function triggerFilePicker() {
     fileInputRef.current?.click();
@@ -90,7 +100,7 @@ function ImagePicker({ label, errors, register, onChange, ...props }: Props) {
           <Button
             type="button"
             importance="secondary"
-            extraClassName=""
+            disabled={disableAddPhotoButton}
             onClick={triggerFilePicker}
           >
             Add a photo

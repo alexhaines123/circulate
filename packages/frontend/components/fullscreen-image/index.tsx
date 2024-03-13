@@ -7,7 +7,6 @@ function FullscreenImage(props: Props) {
   const ref = useRef<HTMLImageElement>(null);
 
   const handleClick = () => {
-    console.log("handleClick");
     if (!ref.current) return;
     ref.current.requestFullscreen();
   };

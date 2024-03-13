@@ -23,7 +23,8 @@ export const productsRouter = router({
               key: z.string().url(),
             })
           )
-          .min(1, "At least one image is required"),
+          .min(1, "At least one image is required")
+          .max(5, "Too many images"),
       })
     )
     .mutation(async (opts) => {
@@ -61,7 +62,7 @@ export const productsRouter = router({
     .query(async (opts) => {
       const { product_id } = opts.input;
       const product = await getProduct({ product_id });
-      console.log(opts.input, product_id, product[0]);
+
       if (!product[0]) {
         throw new Error("Product not found");
       }

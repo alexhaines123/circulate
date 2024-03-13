@@ -2,7 +2,7 @@ import Button from "@/components/button";
 import Modal from "@/components/modal";
 import { formatGBP } from "@/lib/currency";
 import Image from "next/image";
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useState } from "react";
 
 type Props = {
   title: string;
@@ -45,26 +45,6 @@ function ProductDetail({ title, price, description, product_images }: Props) {
             <Fragment key={image.product_image_id}>
               {index > 0 && (
                 <>
-                  <div className="row-span-1 lg:row-span-2">
-                    <Image
-                      key={image.product_image_id}
-                      src={image.key}
-                      alt={title}
-                      fill
-                      className="!relative object-cover w-full h-full m-0 lg:max-h-96"
-                      onClick={() => onOpenImageFullscreen(image.key)}
-                    />
-                  </div>
-                  <div className="row-span-1 lg:row-span-2">
-                    <Image
-                      key={image.product_image_id}
-                      src={image.key}
-                      alt={title}
-                      fill
-                      className="!relative object-cover w-full h-full m-0 lg:max-h-96"
-                      onClick={() => onOpenImageFullscreen(image.key)}
-                    />
-                  </div>
                   <div className="row-span-1 lg:row-span-2">
                     <Image
                       key={image.product_image_id}

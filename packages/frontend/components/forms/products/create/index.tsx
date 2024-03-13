@@ -124,6 +124,7 @@ export function FormContent({
             label="Images"
             name="images"
             errors={errors}
+            maxFiles={5}
             register={register}
             onChange={(files) => {
               if (!files) return;
