@@ -28,7 +28,7 @@ function ProductDetail({ title, price, description, product_images }: Props) {
 
   return (
     <div className="grid grid-cols-12 gap-2">
-      <div className="grid grid-cols-12 col-span-12 lg:col-span-9 lg:grid-cols-8 gap-2">
+      <div className="grid grid-cols-12 col-span-12 lg:col-span-8 lg:grid-cols-8 gap-2">
         <div className="col-span-6 lg:col-span-3 ">
           <Image
             key={product_images[0].product_image_id}
@@ -81,7 +81,7 @@ function ProductDetail({ title, price, description, product_images }: Props) {
           ))}
         </div>
       </div>
-      <div className="col-span-12 lg:col-span-3">
+      <div className="col-span-12 lg:col-span-4">
         <div className=" my-2 lg:my-0 py-4 px-2 border-neutral-content border rounded-lg flex flex-col justify-between">
           <div>
             <h1 className="my-2">{formatGBP(price)}</h1>
