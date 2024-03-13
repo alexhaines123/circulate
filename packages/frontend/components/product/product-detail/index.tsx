@@ -81,17 +81,19 @@ function ProductDetail({ title, price, description, product_images }: Props) {
           ))}
         </div>
       </div>
-      <div className="col-span-12 lg:col-span-3 my-2 lg:my-0 py-4 px-2 border-neutral-content border rounded-lg flex flex-col justify-between">
-        <div>
-          <h1 className="my-2">{formatGBP(price)}</h1>
-          <h2 className="my-2">{title}</h2>
-          <p className="my-2">{description}</p>
-        </div>
-        <div>
-          <Button extraClassName="w-full my-2">Buy now</Button>
-          <Button importance="secondary" extraClassName="w-full ">
-            Make an offer
-          </Button>
+      <div className="col-span-12 lg:col-span-3">
+        <div className=" my-2 lg:my-0 py-4 px-2 border-neutral-content border rounded-lg flex flex-col justify-between">
+          <div>
+            <h1 className="my-2">{formatGBP(price)}</h1>
+            <h2 className="my-2">{title}</h2>
+            <p className="my-2">{description}</p>
+          </div>
+          <div>
+            <Button extraClassName="w-full my-2">Buy now</Button>
+            <Button importance="secondary" extraClassName="w-full ">
+              Make an offer
+            </Button>
+          </div>
         </div>
       </div>
       <Modal open={Boolean(fullscreenImage)} onClose={onCloseImageFullscreen}>
