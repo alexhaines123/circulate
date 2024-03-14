@@ -1,19 +1,16 @@
 import Link from "next/link";
+import { SearchProductNavForm } from "../forms/products/search";
 
 function NavBar() {
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-100 flex-wrap">
       <div className="flex-1">
-        <Link href="/" className="btn btn-ghost">Circulate</Link>
+        <Link href="/" className="btn btn-ghost">
+          Circulate
+        </Link>
       </div>
-      <div className="flex-none gap-2">
-        <div className="form-control">
-          <input
-            type="text"
-            placeholder="Search"
-            className="input input-bordered w-24 md:w-auto"
-          />
-        </div>
+      <div className="flex flex-wrap gap-2">
+        <SearchProductNavForm />
         <Link href="/products/create">
           <button className="btn btn-primary">Sell an item</button>
         </Link>

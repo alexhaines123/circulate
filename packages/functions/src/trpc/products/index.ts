@@ -49,10 +49,21 @@ export const productsRouter = router({
         product_images: productImages,
       };
     }),
-  productList: procedure.query(async () => {
-    const products = await findProducts({});
-    return products;
-  }),
+  productList: procedure
+    .input(
+      z.object({
+        searchQuery: z.string().optional(),
+      })
+    )
+    .query(async (opts) => {
+      const { searchQuery } = opts.input;
+
+      const products = await findProducts(
+        {},
+        { title: searchQuery, description: searchQuery }
+      );
+      return products;
+    }),
   productGet: procedure
     .input(
       z.object({

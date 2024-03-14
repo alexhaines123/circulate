@@ -6,9 +6,10 @@ type Props = {
 };
 
 export default function HeadComponent({ title, description }: Props) {
+  const formattedTitle = `${title} | Circulate`;
   return (
     <Head>
-      <title>{title}</title>
+      <title>{formattedTitle}</title>
       <meta name="description" content={description} />
       <link rel="icon" href="/favicon.ico" />
     </Head>

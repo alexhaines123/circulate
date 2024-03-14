@@ -4,7 +4,10 @@ import { Database } from "../types/db";
 import { NewProduct, NewProductImage, Product } from "../types/product";
 import { jsonArrayFrom } from "kysely/helpers/postgres";
 
-export async function findProducts(criteria: Partial<Product>) {
+export async function findProducts(
+  criteria: Partial<Product>,
+  likeCriteria?: Partial<Product>
+) {
   let query = db.selectFrom("product").select((eb) => withProductImages(eb));
 
   if (criteria.product_id) {
@@ -14,6 +17,17 @@ export async function findProducts(criteria: Partial<Product>) {
   if (criteria.title) {
     query = query.where("title", "=", criteria.title);
   }
+
+  query = query.where((eb) => {
+    const clauses = [];
+    if (likeCriteria?.title) {
+      clauses.push(eb("title", "like", `%${likeCriteria.title}%`));
+    }
+    if (likeCriteria?.description) {
+      clauses.push(eb("description", "like", `%${likeCriteria.description}%`));
+    }
+    return eb.or(clauses);
+  });
 
   return await query.selectAll().execute();
 }
