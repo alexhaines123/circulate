@@ -21,7 +21,7 @@ export const fileRouter = router({
     .input(
       z.object({
         amount: z.number().min(1).int(),
-      })
+      }),
     )
     .mutation(async (opts) => {
       const {
@@ -31,7 +31,7 @@ export const fileRouter = router({
       const urls = await Promise.all(
         Array(amount)
           .fill(null)
-          .map(() => s3GetSignedUrl())
+          .map(() => s3GetSignedUrl()),
       );
       return urls;
     }),

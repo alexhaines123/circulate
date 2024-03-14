@@ -15,7 +15,7 @@ function ProductPage() {
   return (
     <>
       <HeadComponent title={"All items"} />
-      <h1>Products</h1>
+      <h1>Find an Item</h1>
       {productList.data && <ProductList products={productList.data} />}
     </>
   );

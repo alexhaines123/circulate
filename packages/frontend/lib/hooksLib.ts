@@ -7,7 +7,7 @@ interface FieldsType {
 }
 
 export function useFormFields(
-  initialState: FieldsType
+  initialState: FieldsType,
 ): [FieldsType, ChangeEventHandler] {
   const [fields, setValues] = useState(initialState);
 

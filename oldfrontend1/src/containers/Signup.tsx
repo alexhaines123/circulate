@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import Form from 'react-bootstrap/Form';
-import Stack from 'react-bootstrap/Stack';
-import { useNavigate } from 'react-router-dom';
-import { useFormFields } from '../lib/hooksLib';
-import { useAppContext } from '../lib/contextLib';
-import LoaderButton from '../components/LoaderButton';
-import './Signup.css';
-import { Auth } from 'aws-amplify';
-import { onError } from '../lib/errorLib';
-import { ISignUpResult } from 'amazon-cognito-identity-js';
+import React, { useState } from "react";
+import Form from "react-bootstrap/Form";
+import Stack from "react-bootstrap/Stack";
+import { useNavigate } from "react-router-dom";
+import { useFormFields } from "../lib/hooksLib";
+import { useAppContext } from "../lib/contextLib";
+import LoaderButton from "../components/LoaderButton";
+import "./Signup.css";
+import { Auth } from "aws-amplify";
+import { onError } from "../lib/errorLib";
+import { ISignUpResult } from "amazon-cognito-identity-js";
 
 export default function Signup() {
   const [fields, handleFieldChange] = useFormFields({
-    email: '',
-    password: '',
-    confirmPassword: '',
-    confirmationCode: '',
+    email: "",
+    password: "",
+    confirmPassword: "",
+    confirmationCode: "",
   });
   const nav = useNavigate();
   const { userHasAuthenticated } = useAppContext();
@@ -59,7 +59,7 @@ export default function Signup() {
       await Auth.confirmSignUp(fields.email, fields.confirmationCode);
       await Auth.signIn(fields.email, fields.password);
       userHasAuthenticated(true);
-      nav('/');
+      nav("/");
     } catch (e) {
       onError(e);
       setIsLoading(false);

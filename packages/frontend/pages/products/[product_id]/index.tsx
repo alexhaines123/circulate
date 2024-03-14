@@ -19,7 +19,7 @@ function ProductPage() {
       {product.data && (
         <>
           <HeadComponent title={product.data.title} />
-          <ProductDetail {...product.data} />;
+          <ProductDetail {...product.data} />
         </>
       )}
     </>

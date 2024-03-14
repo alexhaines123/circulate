@@ -1,0 +1,10 @@
+# Ignore artifacts:
+build
+coverage
+.sst
+**/.git
+**/.next
+**/.open-next
+**/node_modules
+**/playwright-report
+**/test-results

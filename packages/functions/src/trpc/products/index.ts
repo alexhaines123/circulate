@@ -21,11 +21,11 @@ export const productsRouter = router({
           .array(
             z.object({
               key: z.string().url(),
-            })
+            }),
           )
           .min(1, "At least one image is required")
           .max(5, "Too many images"),
-      })
+      }),
     )
     .mutation(async (opts) => {
       const {
@@ -53,14 +53,14 @@ export const productsRouter = router({
     .input(
       z.object({
         searchQuery: z.string().optional(),
-      })
+      }),
     )
     .query(async (opts) => {
       const { searchQuery } = opts.input;
 
       const products = await findProducts(
         {},
-        { title: searchQuery, description: searchQuery }
+        { title: searchQuery, description: searchQuery },
       );
       return products;
     }),
@@ -68,7 +68,7 @@ export const productsRouter = router({
     .input(
       z.object({
         product_id: z.string(),
-      })
+      }),
     )
     .query(async (opts) => {
       const { product_id } = opts.input;

@@ -6,7 +6,7 @@ import { jsonArrayFrom } from "kysely/helpers/postgres";
 
 export async function findProducts(
   criteria: Partial<Product>,
-  likeCriteria?: Partial<Product>
+  likeCriteria?: Partial<Product>,
 ) {
   let query = db.selectFrom("product").select((eb) => withProductImages(eb));
 
@@ -52,7 +52,7 @@ export async function createProduct(product: NewProduct) {
 }
 
 export async function createProductImage(
-  productImage: NewProductImage | NewProductImage[]
+  productImage: NewProductImage | NewProductImage[],
 ) {
   return await db
     .insertInto("product_image")
@@ -66,6 +66,6 @@ function withProductImages(eb: ExpressionBuilder<Database, "product">) {
     eb
       .selectFrom("product_image")
       .select(["product_image.key", "product_image.product_image_id"])
-      .whereRef("product_image.product_id", "=", "product.product_id")
+      .whereRef("product_image.product_id", "=", "product.product_id"),
   ).as("product_images");
 }

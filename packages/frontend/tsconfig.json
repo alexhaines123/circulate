@@ -14,8 +14,8 @@
     "incremental": true,
     "paths": {
       "@/*": ["./*"],
-      "@notes/core/*": ["../core/src/*"],
-    },
+      "@notes/core/*": ["../core/src/*"]
+    }
   },
   "references": [{ "path": "../functions" }],
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

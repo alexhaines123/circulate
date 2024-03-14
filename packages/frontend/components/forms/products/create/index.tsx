@@ -52,7 +52,7 @@ export function CreateProductForm() {
       const signedUploadUrls = await s3BatchGetS3SignedUrlsMutation.mutateAsync(
         {
           amount: values.images.length,
-        }
+        },
       );
 
       const images = await Promise.all(
@@ -68,7 +68,7 @@ export function CreateProductForm() {
               },
             },
           });
-        })
+        }),
       );
 
       const body = {

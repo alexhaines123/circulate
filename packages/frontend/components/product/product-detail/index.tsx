@@ -35,7 +35,7 @@ function ProductDetail({ title, price, description, product_images }: Props) {
             src={product_images[0].key}
             alt={title}
             fill
-            className="!relative object-cover w-full h-full m-0 pointer  "
+            className="!relative object-cover w-full h-full m-0 cursor-pointer"
             id="product-image"
             onClick={() => onOpenImageFullscreen(product_images[0].key)}
           />
@@ -51,7 +51,7 @@ function ProductDetail({ title, price, description, product_images }: Props) {
                       src={image.key}
                       alt={title}
                       fill
-                      className="!relative object-cover w-full h-full m-0 lg:max-h-96"
+                      className="!relative object-cover w-full h-full m-0 lg:max-h-96 cursor-pointer"
                       onClick={() => onOpenImageFullscreen(image.key)}
                     />
                   </div>

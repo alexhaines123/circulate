@@ -1,18 +1,18 @@
-import React, { useRef, useState } from 'react';
-import Form from 'react-bootstrap/Form';
-import { useNavigate } from 'react-router-dom';
-import LoaderButton from '../components/LoaderButton';
-import config from '../config';
-import './NewNote.css';
-import { onError } from '../lib/errorLib';
-import { API } from 'aws-amplify';
-import { NoteType } from '../types/note';
-import { s3Upload } from '../lib/awsLib';
+import React, { useRef, useState } from "react";
+import Form from "react-bootstrap/Form";
+import { useNavigate } from "react-router-dom";
+import LoaderButton from "../components/LoaderButton";
+import config from "../config";
+import "./NewNote.css";
+import { onError } from "../lib/errorLib";
+import { API } from "aws-amplify";
+import { NoteType } from "../types/note";
+import { s3Upload } from "../lib/awsLib";
 
 export default function NewNote() {
   const file = useRef<null | File>(null);
   const nav = useNavigate();
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   function validateForm() {
@@ -25,7 +25,7 @@ export default function NewNote() {
   }
 
   function createNote(note: NoteType) {
-    return API.post('notes', '/notes', {
+    return API.post("notes", "/notes", {
       body: note,
     });
   }
@@ -50,7 +50,7 @@ export default function NewNote() {
         : undefined;
 
       await createNote({ content, attachment });
-      nav('/');
+      nav("/");
     } catch (e) {
       onError(e);
       setIsLoading(false);

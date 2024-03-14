@@ -1,27 +1,27 @@
- import React, { useRef, useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { API, Storage } from 'aws-amplify';
-import { onError } from '../lib/errorLib';
-import config from '../config';
-import Form from 'react-bootstrap/Form';
-import { NoteType } from '../types/note';
-import Stack from 'react-bootstrap/Stack';
-import LoaderButton from '../components/LoaderButton';
-import './Notes.css';
-import { s3Upload } from '../lib/awsLib';
+import React, { useRef, useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { API, Storage } from "aws-amplify";
+import { onError } from "../lib/errorLib";
+import config from "../config";
+import Form from "react-bootstrap/Form";
+import { NoteType } from "../types/note";
+import Stack from "react-bootstrap/Stack";
+import LoaderButton from "../components/LoaderButton";
+import "./Notes.css";
+import { s3Upload } from "../lib/awsLib";
 
 export default function Notes() {
   const file = useRef<null | File>(null);
   const { id } = useParams();
   const nav = useNavigate();
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [note, setNote] = useState<null | NoteType>(null);
 
   useEffect(() => {
     function loadNote() {
-      return API.get('notes', `/notes/${id}`, {});
+      return API.get("notes", `/notes/${id}`, {});
     }
 
     async function onLoad() {
@@ -48,7 +48,7 @@ export default function Notes() {
   }
 
   function formatFilename(str: string) {
-    return str.replace(/^\w+-/, '');
+    return str.replace(/^\w+-/, "");
   }
 
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -57,11 +57,11 @@ export default function Notes() {
   }
 
   function saveNote(note: NoteType) {
-    return API.put('notes', `/notes/${id}`, {
+    return API.put("notes", `/notes/${id}`, {
       body: note,
     });
   }
-  
+
   function deleteAttachment(attachment: string) {
     return Storage.vault.remove(attachment);
   }
@@ -94,7 +94,7 @@ export default function Notes() {
         content: content,
         attachment: attachment,
       });
-      nav('/');
+      nav("/");
     } catch (e) {
       onError(e);
       setIsLoading(false);
@@ -102,14 +102,14 @@ export default function Notes() {
   }
 
   function deleteNote() {
-    return API.del('notes', `/notes/${id}`, {});
+    return API.del("notes", `/notes/${id}`, {});
   }
 
   async function handleDelete(event: React.FormEvent<HTMLModElement>) {
     event.preventDefault();
 
     const confirmed = window.confirm(
-      'Are you sure you want to delete this note?',
+      "Are you sure you want to delete this note?",
     );
 
     if (!confirmed) {
@@ -120,7 +120,7 @@ export default function Notes() {
 
     try {
       await deleteNote();
-      nav('/');
+      nav("/");
     } catch (e) {
       onError(e);
       setIsDeleting(false);

@@ -16,7 +16,7 @@ export async function up(db) {
     .createTable("product_image")
     .addColumn("product_image_id", "text", (col) => col.primaryKey())
     .addColumn("product_id", "text", (col) =>
-      col.references("product.product_id").onDelete("cascade").notNull()
+      col.references("product.product_id").onDelete("cascade").notNull(),
     )
     .addColumn("key", "text", (col) => col.notNull())
     .execute();

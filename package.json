@@ -11,12 +11,16 @@
     "console": "sst console",
     "typecheck": "tsc --noEmit",
     "test": "sst bind vitest run",
-    "gen": "hygen"
+    "gen": "hygen",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.2",
     "aws-cdk-lib": "2.124.0",
     "constructs": "10.3.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "3.2.5",
     "sst": "^2.40.1",
     "typescript": "^5.3.3",
     "vitest": "^1.2.2"
@@ -34,5 +38,8 @@
     "kysely": "^0.27.3",
     "kysely-data-api": "^0.2.1",
     "zod": "^3.22.4"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   }
 }

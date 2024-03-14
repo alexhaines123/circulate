@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
-import ListGroup from 'react-bootstrap/ListGroup';
-import { useAppContext } from '../lib/contextLib';
-import './Home.css';
-import { NoteType } from '../types/note';
-import { onError } from '../lib/errorLib';
-import { API } from 'aws-amplify';
-import { LinkContainer } from 'react-router-bootstrap';
-import { BsPencilSquare } from 'react-icons/bs';
+import { useEffect, useState } from "react";
+import ListGroup from "react-bootstrap/ListGroup";
+import { useAppContext } from "../lib/contextLib";
+import "./Home.css";
+import { NoteType } from "../types/note";
+import { onError } from "../lib/errorLib";
+import { API } from "aws-amplify";
+import { LinkContainer } from "react-router-bootstrap";
+import { BsPencilSquare } from "react-icons/bs";
 
 export default function Home() {
   const [notes, setNotes] = useState<Array<NoteType>>([]);
@@ -33,11 +33,11 @@ export default function Home() {
   }, [isAuthenticated]);
 
   function loadNotes() {
-    return API.get('notes', '/notes', {});
+    return API.get("notes", "/notes", {});
   }
 
   function formatDate(str: undefined | string) {
-    return !str ? '' : new Date(str).toLocaleString();
+    return !str ? "" : new Date(str).toLocaleString();
   }
 
   function renderNotesList(notes: NoteType[]) {
@@ -52,7 +52,7 @@ export default function Home() {
         {notes.map(({ noteId, content, createdAt }) => (
           <LinkContainer key={noteId} to={`/notes/${noteId}`}>
             <ListGroup.Item action className="text-nowrap text-truncate">
-              <span className="fw-bold">{content.trim().split('\n')[0]}</span>
+              <span className="fw-bold">{content.trim().split("\n")[0]}</span>
               <br />
               <span className="text-muted">
                 Created: {formatDate(createdAt)}
